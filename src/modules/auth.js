@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import getHeader from "../utility/axios.js";
+// import getHeader from "../utility/axios.js";
 
 
 export const AUTH_REQUESTED = 'auth/AUTH_REQUESTED'
@@ -15,7 +15,8 @@ const initialState = {
   isAuthenticated: false,
   isAuthenticating: true,
   message:"",
-  authUserData:null
+  authUserData:null,
+  userList:[]
 }
 
 export default (state = initialState, action) => {
@@ -30,7 +31,7 @@ export default (state = initialState, action) => {
       }
     case IS_AUTHENTCATING:
 
-    console.log(" ------ IS_AUTHENTCATING -----------", {data:getHeader()});
+    // console.log(" ------ IS_AUTHENTCATING -----------", {data:getHeader()});
       return {
         ...state,
         isAuthenticating: true,
@@ -54,6 +55,12 @@ export default (state = initialState, action) => {
         isAuthenticated: localStorage.getItem("authUserData") ? true : false,
         authUserData: localStorage.getItem("authUserData") ? JSON.parse(localStorage.getItem("authUserData")) : {},
 
+      }
+    case IS_APICALL_Success:
+      console.log(action);
+      return {
+        ...state,
+        userList:action.data ? action.data.response :[]
       }
 
 
@@ -112,19 +119,16 @@ export const loginSuccess = (response, dispatch) => {
 }
 
 
-export const checkAPIUser = (data) => {
+export const getUserList = (data) => {
   console.log(fetch);
   return dispatch => {
     dispatch({
       type: IS_APICALL
     })
-console.log(data, {data:getHeader()});
-axios.post('http://localhost:7070/v1/clearAssetHistory.json?pId=53', {
-    "uId":"lp40rKHS60Wtrx1vVxKcXOT4u",
-    "profileId":"4mj2eZuPTXBW8ZpS25oClp40r0Wtrx",
-    "mediaTypeId":"538",
-    "mediaId":["314901"]
-}, {'Content-Type': 'application/json'})
+//     let header = getHeader()
+// console.log(data, {data:getHeader()});
+// let token = await getAuthToken()
+axios.get('http://localhost:8888/api/user')
   .then(function (response) {
     console.log(response);
     dispatch({
@@ -144,7 +148,7 @@ export const AuthUser = (data) => {
     dispatch({
       type: IS_AUTHENTCATING
     })
-console.log(data, {data:getHeader()});
+// console.log(data, {data:getHeader()});
 axios.post('http://localhost:8888/api/login', {
     ...data
   })
@@ -195,4 +199,15 @@ export const Logout = () => {
       type: LOGOUT
     })
   }
+}
+
+
+let getAuthToken = async ()=> {
+  let tokenData = localStorage.getItem('authUserData');
+  let token = "";
+  if (tokenData) {
+    console.log("________________________");
+      token = JSON.parse(tokenData).token
+  }
+  return token;
 }

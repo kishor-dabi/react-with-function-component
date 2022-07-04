@@ -8,30 +8,55 @@ import {
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom';
+import { Grid, TextField } from '@mui/material'
 
 
-var renderError = ({ error, touched }) => {
-   if (error && touched) {
-     return (<span className=""> {error} </span>)
-   }
-   return ''
- }
+// var renderError = ({ error, touched }) => {
+//    if (error && touched) {
+//      return (<span className=""> {error} </span>)
+//    }
+//    return ''
+//  }
 
-  var renderField = ({ input, label, name, type, meta, value }) => {
+//   var renderField = ({ input, label, name, type, meta, value }) => {
 
-   return (<div>
-     {/* <label>{label}</label> */}
-     <div className='form-group'>
+//    return (<div>
+//      {/* <label>{label}</label> */}
+//      <div className='form-group'>
 
-       {/* <TextField error={this.renderError(meta) == '' ? false : true} id="standard-error-helper-text" fullWidth={true}
-         {...input} type={type} label={label} helperText={this.renderError(meta)}
-       /> */}
-       <input  {...input} type={type} className={meta.touched && meta.error ? 'is-invalid form-control' : 'form-control'} value={value} />
-       {renderError(meta)}
-     </div>
-   </div>
-   )
- }
+//        {/* <TextField error={this.renderError(meta) == '' ? false : true} id="standard-error-helper-text" fullWidth={true}
+//          {...input} type={type} label={label} helperText={this.renderError(meta)}
+//        /> */}
+//        <input  {...input} type={type} className={meta.touched && meta.error ? 'is-invalid form-control' : 'form-control'} value={value} />
+//        {renderError(meta)}
+//      </div>
+//    </div>
+//    )
+//  }
+
+ 
+let renderError = ({ error, touched }) => {
+  if (error && touched) {
+    return (<span className=""> {error} </span>)
+  }
+  return ''
+}
+
+let renderField = ({ input, label, name, type, meta }) => {
+
+  return (<div>
+    {/* <label>{label}</label> */}
+    <div className='form-group'>
+
+    <TextField variant="outlined" error={renderError(meta) == ''   ? false : true} id="standard-error-helper-text" fullWidth={true}
+        {...input} type={type} label={label} helperText={renderError(meta)}
+                />
+      {/* <input  className={meta.touched && meta.error ? 'is-invalid form-control' : 'form-control'} /> */}
+      {/* {this.renderError(meta)} */}
+    </div>
+  </div>
+  )
+}
 
 
 const LoginForm = (props)=> {
@@ -61,28 +86,46 @@ var submit = (e) => {
     const { handleSubmit, reset, submitting } = props
 
     return (
+      <div className='row mt-3'>
+
+      {/* <Grid container > */}
+
+     
       <form onSubmit={handleSubmit(submit)}>
 
-
-             <Field
-               name="email" validate={[emailFieldValidation, Required]}
-               component={renderField}
-               label="Email"
-               type="text"
-             />
-             <Field
-               name="password" validate={Required}
-               component={renderField}
-               label="Password"
-               type="password"
-             />
-             <div>
+<Grid  container spacing={4}>
+  <Grid item sm={8}>
+  <Field
+      name="email" validate={[emailFieldValidation, Required]}
+      component={renderField}
+      label="Email"
+      type="text"
+    />
+  </Grid>
+  <Grid item sm={8}>
+  <Field
+      name="password" validate={Required}
+      component={renderField}
+      label="Password"
+      type="password"
+      />
+  </Grid>
+  <Grid item sm={6}>
+  <div>
                <button type="submit" className="btn btn-primary">
                  Login
                </button>
 
              </div>
-           </form>)
+  </Grid>
+  </Grid>
+
+             
+           </form>
+  {/* </Grid>            */}
+      </div>
+           )
+           
          // }
 
 }

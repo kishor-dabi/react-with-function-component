@@ -9,6 +9,7 @@ import {
 } from '../../modules/auth'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Button, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 // import history from "./../../utility/history";
 
 
@@ -61,8 +62,29 @@ return (<>
 
   <header>
 
+  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+  <Container>
+  <Navbar.Brand href="#home">App</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="me-auto">
+      {/* <Nav.Link href="#features">Features</Nav.Link>
+      <Nav.Link href="#pricing">Pricing</Nav.Link>
+      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+      </NavDropdown> */}
+    </Nav>
+    {props.isAuthenticated ? <> <Link to="/home" className='m-2'>Home</Link>  <Link className='m-2' to="/about-us">About</Link> <Button onClick={props.Logout}>Logout</Button></> : <Nav.Link to="/">Login</Nav.Link>}
+   
+  </Navbar.Collapse>
+  </Container>
+</Navbar>
 
-  {props.isAuthenticated ? <> <Link to="/home">Home</Link> <Link to="/about-us">About</Link> <button onClick={props.Logout}>logout</button></> : <Link to="/">Login</Link>}
+  
 
   </header>
 

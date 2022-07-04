@@ -9,11 +9,12 @@ import {
   decrementAsync
 } from '../../modules/counter'
 import {
-  checkAPIUser
+  getUserList
 } from '../../modules/auth'
 
 // import history from "./../../utility/history";
 import {Link, useNavigate} from 'react-router-dom';
+import Table from 'react-bootstrap/Table'
 
 function changePage(props){
   // const navigate = useNavigate();
@@ -24,6 +25,24 @@ function changePage(props){
 
 };
 
+let RenderuserList = ({userList}) => {
+  console.log(userList, "______________________");
+  let list = userList.map((list,i)=>{       
+    return (
+
+      <tr key={i}>
+        <td>{list.user_id}</td>
+        <td>{list.full_name}</td>
+        <td>{list.email}</td>
+        <td>{list.phone_number}</td>
+      </tr>
+
+    )       
+  }) 
+
+  return list
+}
+
 function Home(props) {
   let navigate = useNavigate();
 
@@ -32,14 +51,16 @@ function Home(props) {
       navigate("/about-us", { replace: true });
     }
     useEffect(() => {
-      console.log(props);
-      props.checkAPIUser()
+      console.log(props, "+++++++++++++++++++++++++++++++");
+      props.getUserList()
 
     }, [])
 
 return  <div>
     <h1>Home</h1>
-    <p>Count: {props.count}</p>
+
+
+    {/* <p>Count: {props.count}</p>
 
     <p>
       <button onClick={props.increment}>Increment</button>
@@ -59,16 +80,49 @@ return  <div>
       <button onClick={() => changePage(props)}>
         Go to about page via redux
       </button>
-    </p>
+    </p> */}
+   
+
+<Table  bordered hover>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>email</th>
+      <th>Phone number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td colSpan={2}>Larry the Bird</td>
+      <td>@twitter</td>
+    </tr> */}
+     <RenderuserList {...props}/>
+  </tbody>
+</Table>
   </div>
 }
 
-const mapStateToProps = ({counter}) => (
-// console.log(counter)
+const mapStateToProps = ({counter, auth}) => (
+// console.log(counter, auth)
   {
   count: counter.count,
   isIncrementing: counter.isIncrementing,
   isDecrementing: counter.isDecrementing,
+  userList: auth.userList
 }
 )
 
@@ -76,7 +130,7 @@ const mapDispatchToProps = dispatch =>
 
   bindActionCreators(
     {
-      checkAPIUser,
+      getUserList,
       increment,
       incrementAsync,
       decrement,

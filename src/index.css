@@ -1,4 +1,3 @@
-@import "~bootstrap/scss/bootstrap";
 
 html {
   font-size: 100%;
@@ -15,4 +14,22 @@ body {
 
 button:disabled {
   opacity: 0.5;
+}
+
+thead {
+  font-family: 'Open Sans',sans-serif !important;
+    /* font-weight: 800!important; */
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 1.5px;
+    color: #5e5454;
+}
+
+tbody > tr {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  align-items: center;
+  box-sizing: border-box;
 }

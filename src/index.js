@@ -9,9 +9,9 @@ import rootReducerObj from './modules'
 import thunk from "redux-thunk";
 import * as History from 'history'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "./utility/axios"
 import { reducer as form } from 'redux-form';
-
+import "./index.css"
 const history = History.createBrowserHistory()
 // history.push("/about-us")
 // import { createTheme, ThemeProvider } from "@material-ui/core/styles";
